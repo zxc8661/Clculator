@@ -13,14 +13,20 @@ public class Calculator {
     public String changeFormula(String cmd){
         StringBuilder sb= new StringBuilder();
         Stack<Character> st = new Stack<>();
+        char pre ='1';
 
         for(int i=0;i<cmd.length();i++){
             char ch= cmd.charAt(i);
-
-            if(Character.isDigit(ch)){
+            if(ch==' ') continue;
+            if(Character.isDigit(ch) || (ch=='-' && Character.isDigit(cmd.charAt(i+1)))){
+                if(ch=='-'){
+                    sb.append(ch);
+                    i++;
+                    ch=cmd.charAt(i);
+                }
 
                 while(i<cmd.length() && Character.isDigit(cmd.charAt(i))){
-                    sb.append(ch);
+                    sb.append(cmd.charAt(i));
                     i++;
                 }
                 i--;
@@ -28,7 +34,7 @@ public class Calculator {
             }else if(ch=='('){
                 st.push(ch);
             }else if(ch==')'){
-                while( st.peek()=='('){
+                while( st.peek()!='(' ){
                     sb.append(st.pop()).append(" ");
                 }
                 st.pop();
@@ -39,6 +45,7 @@ public class Calculator {
                 st.push(ch);
             }
 
+            pre = ch;
         }
 
         while(!st.isEmpty()){
