@@ -5,7 +5,12 @@ import java.util.List;
 import java.util.Stack;
 
 public class Calculator {
-    public void run(String cmd){
+    public String run(String cmd){
+       String rear = changeFormula(cmd).trim();
+       return rear;
+    }
+
+    public String changeFormula(String cmd){
         StringBuilder sb= new StringBuilder();
         Stack<Character> st = new Stack<>();
 
@@ -39,9 +44,8 @@ public class Calculator {
         while(!st.isEmpty()){
             sb.append(st.pop()).append(" ");
         }
-        System.out.println(sb.toString());
+        return sb.toString();
     }
-
     public int priority(char ch){
         switch (ch){
             case '+':
@@ -53,6 +57,8 @@ public class Calculator {
         }
         return -1;
     }
+
+
 
 
 
